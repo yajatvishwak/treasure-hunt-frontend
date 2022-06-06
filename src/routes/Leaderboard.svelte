@@ -10,7 +10,11 @@
   }
   onMount(async () => {
     loading = true;
-    let socket = io("http://localhost:5000");
+    let socket = io(import.meta.env.VITE_BASEURL);
+
+    socket.on("connect", (m) => {
+      console.log(m);
+    });
     socket.on("leaderboard", (m) => {
       console.log(m);
       if (m.rank) {
@@ -25,14 +29,14 @@
 >
   <div class=" border-b-2">
     <div class="float p-5 ">
+      <span class="mx-2 text-yellow-400">Initium 2k22</span>
+      <span class="mx-2 text-red-400">OnePiece</span>
       <span class="mx-2">Initium 2k22</span>
+      <span class="mx-2">OnePiece</span>
+      <span class="mx-2 text-yellow-400">Initium 2k22</span>
+      <span class="mx-2 text-red-400">OnePiece</span>
       <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
+      <span class="mx-2">OnePiece</span>
     </div>
   </div>
 
@@ -45,15 +49,12 @@
       <table class="w-full text-center">
         <thead>
           <tr>
-            <th
-              class="border bg-lime-300 text-black border-black p-3 border-l-0"
+            <th class="border bg-red-400 text-black border-black p-3 border-l-0"
               >Rank</th
             >
-            <th class="border bg-lime-300 text-black border-black p-3">Team</th>
-            <th class="border bg-lime-300 text-black border-black p-3">Score</th
-            >
-            <th
-              class="border bg-lime-300 text-black border-black p-3 border-r-0"
+            <th class="border bg-red-400 text-black border-black p-3">Team</th>
+            <th class="border bg-red-400 text-black border-black p-3">Score</th>
+            <th class="border bg-red-400 text-black border-black p-3 border-r-0"
               >Time</th
             >
           </tr>

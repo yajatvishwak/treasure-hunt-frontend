@@ -11,6 +11,7 @@
   let vid;
   let qrScanner;
   let loading = true;
+  let loadingSubmit = false;
 
   let current = -1;
   let rank = 0;
@@ -21,7 +22,7 @@
   let currCaptcha = false;
 
   onMount(async () => {
-    let socket = io("http://localhost:5000");
+    let socket = io(import.meta.env.VITE_BASEURL);
     socket.on("leaderboard", (m) => {
       console.log("received");
       if (m.rank) {
@@ -39,6 +40,7 @@
           headers: { Authorization: "Bearer " + localStorage.getItem("token") },
         }
       );
+
       if (res.data && res.data.status === "GNS") {
         let res2 = await axios.get(
           import.meta.env.VITE_BASEURL + "/game/getStartQuestion",
@@ -55,6 +57,10 @@
         }
       } else if (res.data && res.data.status === "CG") {
         replace("/fincode");
+      } else if (res.data && res.data.status === "TNF") {
+        localStorage.setItem("token", "");
+        localStorage.setItem("teamID", "");
+        replace("/");
       } else if (res.data && res.data.status === "FS") {
         replace("/leaderboard");
       } else {
@@ -77,10 +83,24 @@
     qrScanner.stop();
     qrOpen = false;
   }
-  function wa() {
+  function wa(mode) {
+    if (mode === "WQ")
+      return swal(
+        "Keep searching",
+        "Wrong QR, but the captcha question is right!",
+        "error"
+      );
+    if (mode === "WAQ") return swal("Oops...", "Wrong QR and Captcha", "error");
+    if (mode === "WA")
+      return swal(
+        "Keep thinking",
+        "Wrong Captcha answer, but the QR code is right!",
+        "error"
+      );
     swal("Oops...", "Wrong Answer", "error");
   }
   async function submitStartAnswer() {
+    loadingSubmit = true;
     let res = await axios.post(
       import.meta.env.VITE_BASEURL + "/game/checkStartAnswer",
       { startAnswer: currCaptchaAnswer ? currCaptchaAnswer : "" },
@@ -90,6 +110,8 @@
         },
       }
     );
+    loadingSubmit = false;
+    drawerOpen = false;
     currCaptchaAnswer = "";
     currScannedQR = "";
     if (res.data) {
@@ -106,11 +128,12 @@
     }
   }
   async function submitAnswer() {
+    loadingSubmit = true;
     let res = await axios.post(
       import.meta.env.VITE_BASEURL + "/game/checkAnswer",
       {
         captchaAnswer: currCaptchaAnswer ? currCaptchaAnswer : "",
-        qrCodeSolution: currScannedQR ? currScannedQR : "s5",
+        qrCodeSolution: currScannedQR ? currScannedQR : "s1",
         current,
       },
       {
@@ -119,6 +142,8 @@
         },
       }
     );
+    loadingSubmit = false;
+    drawerOpen = false;
     currCaptchaAnswer = "";
     currScannedQR = "";
     if (res.data) {
@@ -136,25 +161,31 @@
         currCaptchaQuestion = res.data.nextCaptchaQuestion;
         if (currCaptchaQuestion) currCaptcha = true;
         else currCaptcha = false;
-        return swal(
-          res.data.finCode,
-          "Correct! Remember this Code (important)",
-          "success"
-        );
+        return swal({
+          text: "You got that one, Good Job! Remember the above letter. (needs to be submitted in the end of the game, otherwise you will be disqualified)",
+          closeOnClickOutside: false,
+          closeOnEsc: false,
+          icon: "success",
+          title: res.data.finCode,
+        });
       }
+      if (res.data.status && res.data.status === "WA") return wa("WA");
+      if (res.data.status && res.data.status === "WAQ") return wa("WAQ");
+      if (res.data.status && res.data.status === "WQ") return wa("WQ");
       return wa();
     }
   }
 </script>
 
 {#if loading}
-  <div class="flex justify-center items-center h-screen">
-    <div class="w-full max-w-xs">
-      <div class="text-center mb-6">
-        <img src="/logo.svg" class="w-24" />
+  <div class="flex justify-center items-center h-screen bg-black">
+    <div class="w-full max-w-sm">
+      <div class="text-center mb-6 text-4xl">
+        <span class="text-red-500">One Piece</span> -
+        <span class="text-yellow-200"> Initium 2022 </span>
       </div>
       <div class="text-gray-600 text-center">
-        <p>Loading...</p>
+        <p class="animate-pulse">Loading...</p>
       </div>
     </div>
   </div>
@@ -201,7 +232,7 @@
   <div
     class={`${
       drawerOpen
-        ? "bg-lime-300  z-10 p-3 absolute bottom-0 w-full h-full flex flex-col   text-black "
+        ? "bg-red-400  z-10 p-3 absolute bottom-0 w-full h-full flex flex-col   text-black "
         : "hidden"
     }`}
   >
@@ -233,22 +264,25 @@
         } else {
           submitAnswer();
         }
-        drawerOpen = false;
       }}
     >
       <div class="flex justify-between flex-col gap-3">
         <input
-          class="w-full p-2 border-2 focus:outline-none bg-transparent border-black"
+          class="w-full p-2 border-2 border-black focus:outline-none bg-transparent text-black placeholder-slate-900"
           type="text"
           bind:value={currCaptchaAnswer}
           placeholder="Answer"
         />
-        <button
-          class="bold py-2 px-4 bg-black hover:border-2 border-black hover:text-black hover:bg-transparent text-white"
-          type="submit"
-        >
-          Submit
-        </button>
+        {#if loadingSubmit}
+          <div class="text-center animate-pulse">Loading...</div>
+        {:else}
+          <button
+            class="bold py-2 px-4 bg-black hover:border-2 border-black hover:text-black hover:bg-transparent text-white"
+            type="submit"
+          >
+            Submit
+          </button>
+        {/if}
       </div>
     </form>
   </div>
@@ -260,19 +294,19 @@
   >
     <div class="p-5 border-b-2">
       <div class="float">
+        <span class="mx-2 text-yellow-400">Initium 2k22</span>
+        <span class="mx-2 text-red-400">OnePiece</span>
         <span class="mx-2">Initium 2k22</span>
+        <span class="mx-2">OnePiece</span>
+        <span class="mx-2 text-yellow-400">Initium 2k22</span>
+        <span class="mx-2 text-red-400">OnePiece</span>
         <span class="mx-2">Initium 2k22</span>
-        <span class="mx-2">Initium 2k22</span>
-        <span class="mx-2">Initium 2k22</span>
-        <span class="mx-2">Initium 2k22</span>
-        <span class="mx-2">Initium 2k22</span>
-        <span class="mx-2">Initium 2k22</span>
-        <span class="mx-2">Initium 2k22</span>
+        <span class="mx-2">OnePiece</span>
       </div>
     </div>
 
     <div class="flex items-center justify-center py-10  border-b-2 ">
-      <div class="text-[2em] font-black text-center">
+      <div class="text-[2em] font-black text-center text-yellow-300">
         //{localStorage.getItem("teamID")}
       </div>
     </div>
@@ -282,20 +316,23 @@
         class=" flex flex-col gap-2 justify-center items-center border-r-2 flex-1 py-4 font-black"
       >
         <div class="text-5xl font-thin">{current + 1}/10</div>
-        <div class="text-lime-400">level</div>
+        <div class="text-red-400">level</div>
       </div>
 
       <div
+        on:click={() => {
+          window.location.href = "/#/leaderboard";
+        }}
         class=" flex flex-col gap-2 justify-center items-center flex-1 py-4 font-black"
       >
-        <div class="text-5xl text-lime-300">#{rank}</div>
+        <div class="text-5xl text-red-400">#{rank}</div>
         <div class="">rank</div>
       </div>
     </div>
 
     <div class="p-7 ">
       <div
-        class="font-black text-2xl text-lime-400 flex justify-between items-center"
+        class="font-black text-2xl text-red-400 flex justify-between items-center"
       >
         <div>Solving Location Question #{current + 1}</div>
         {#if currCaptcha}
@@ -318,7 +355,7 @@
       </div>
       <label
         for="my-modal"
-        class="flex justify-center p-5 text-black  bg-lime-400 flex-1"
+        class="flex justify-center p-5 text-black  bg-red-400 flex-1"
       >
         Scan
       </label>

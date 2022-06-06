@@ -38,19 +38,19 @@
 >
   <div class="p-5 border-b-2">
     <div class="float">
+      <span class="mx-2 text-yellow-400">Initium 2k22</span>
+      <span class="mx-2 text-red-400">OnePiece</span>
       <span class="mx-2">Initium 2k22</span>
+      <span class="mx-2">OnePiece</span>
+      <span class="mx-2 text-yellow-400">Initium 2k22</span>
+      <span class="mx-2 text-red-400">OnePiece</span>
       <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
+      <span class="mx-2">OnePiece</span>
     </div>
   </div>
 
   <div class="flex items-center justify-center py-10  border-b-2 ">
-    <div class="text-[2em] font-black text-center">
+    <div class="text-[2em] text-yellow-400 font-black text-center">
       //{localStorage.getItem("teamID")}
     </div>
   </div>
@@ -58,14 +58,13 @@
     <div class="text-center">
       You were asked to remember a few codes when ever you solved a level.
     </div>
-    <div class="mt-10 text-green-300 mb-6">Enter all your final codes</div>
+    <div class="mt-10 text-red-400 mb-6">Enter all your final codes</div>
     <form class="w-full">
-      <textarea
-        rows="10"
+      <input
         bind:value={fincode}
         type="text"
         placeholder="enter codes here "
-        class="p-3 bg-transparent border-2 w-full outline-lime-300 "
+        class="p-3 bg-transparent border-2 w-full outline-red-400 "
         name=""
         id=""
       />
@@ -75,7 +74,7 @@
   <button
     disabled={loading}
     on:click={submit}
-    class="bg-lime-300 text-black p-5 text-center mt-auto"
+    class="bg-red-400 text-black p-5 text-center mt-auto"
   >
     {loading ? "Loading..." : "Submit"}
   </button>

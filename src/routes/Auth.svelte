@@ -34,14 +34,14 @@
 >
   <div class="mb-4 pt-7">
     <div class="float ">
+      <span class="mx-2 text-yellow-400">Initium 2k22</span>
+      <span class="mx-2 text-red-400">OnePiece</span>
       <span class="mx-2">Initium 2k22</span>
+      <span class="mx-2">OnePiece</span>
+      <span class="mx-2 text-yellow-400">Initium 2k22</span>
+      <span class="mx-2 text-red-400">OnePiece</span>
       <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
+      <span class="mx-2">OnePiece</span>
     </div>
   </div>
   <hr />
@@ -51,27 +51,27 @@
       <div class="text-3xl">dare to continue?</div>
       <input
         type="text"
-        class="p-3 bg-transparent border outline-lime-400"
+        class="p-3 bg-transparent border outline-red-400"
         placeholder="player 1 name"
       />
       <input
         type="text"
-        class="p-3 bg-transparent border outline-lime-400"
+        class="p-3 bg-transparent border outline-red-400"
         placeholder="player 2 name"
       />
       <input
         type="text"
-        class="p-3 bg-transparent border outline-lime-400"
+        class="p-3 bg-transparent border outline-red-400"
         placeholder="player 3 name"
       />
       <input
         type="text"
-        class="p-3 bg-transparent border outline-lime-400"
+        class="p-3 bg-transparent border outline-red-400"
         placeholder="player 4 name"
       />
       <button
         type="submit"
-        class="p-5 bg-lime-400 text-black font-bold hover:bg-black hover:border text-center text-3xl  hover:border-lime-400 transition-all hover:text-white"
+        class="p-5 bg-red-400 text-black font-bold hover:bg-black hover:border text-center text-3xl  hover:border-red-400 transition-all hover:text-white"
       >
         Logon
       </button>
@@ -80,14 +80,14 @@
   <hr />
   <div class="mt-4 pb-7">
     <div class="float2 ">
+      <span class="mx-2 text-yellow-400">Initium 2k22</span>
+      <span class="mx-2 text-red-400">OnePiece</span>
       <span class="mx-2">Initium 2k22</span>
+      <span class="mx-2">OnePiece</span>
+      <span class="mx-2 text-yellow-400">Initium 2k22</span>
+      <span class="mx-2 text-red-400">OnePiece</span>
       <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
-      <span class="mx-2">Initium 2k22</span>
+      <span class="mx-2">OnePiece</span>
     </div>
   </div>
 </section>
