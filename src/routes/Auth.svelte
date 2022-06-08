@@ -2,11 +2,15 @@
   import swal from "sweetalert";
   import axios from "axios";
   import { push } from "svelte-spa-router";
+  import { onMount } from "svelte";
   let p1 = "";
   let p2 = "";
   let p3 = "";
   let p4 = "";
-
+  onMount(() => {
+    if (localStorage.getItem("token") && localStorage.getItem("teamID"))
+      return push("/game");
+  });
   async function submit() {
     if (localStorage.getItem("token") && localStorage.getItem("teamID"))
       return push("/game");
