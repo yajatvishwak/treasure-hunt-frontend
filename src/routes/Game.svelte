@@ -13,24 +13,23 @@
   let loading = true;
   let loadingSubmit = false;
   let fqrmemes = [
-"https://i.imgur.com/qz63qv1.jpeg",
-"https://i.imgur.com/HMibelo.jpeg",
-"https://i.imgur.com/itOjQqF.jpeg",
-"https://i.imgur.com/8LHRWDd.jpeg",
-"https://i.imgur.com/OxJxqiL.gif",
-"https://i.imgur.com/OQItmkw.jpeg",
-"https://i.imgur.com/oDDBsKq.jpeg",
-"https://i.imgur.com/qXjVXFe.jpeg",
-"https://i.imgur.com/HV3cO6b.jpeg",
-"https://i.imgur.com/ok65VgU.jpeg",
-"https://i.imgur.com/482sJy8.jpeg",
-"https://i.imgur.com/uWKmkfK.jpeg",
-"https://i.imgur.com/rCrGYKo.jpeg",
-"https://i.imgur.com/GMHfJeL.jpeg",
-"https://i.imgur.com/hVxoy1I.jpeg",
-"https://i.imgur.com/QiowRa3.jpeg"]
-
-
+    "https://i.imgur.com/qz63qv1.jpeg",
+    "https://i.imgur.com/HMibelo.jpeg",
+    "https://i.imgur.com/itOjQqF.jpeg",
+    "https://i.imgur.com/8LHRWDd.jpeg",
+    "https://i.imgur.com/OxJxqiL.gif",
+    "https://i.imgur.com/OQItmkw.jpeg",
+    "https://i.imgur.com/oDDBsKq.jpeg",
+    "https://i.imgur.com/qXjVXFe.jpeg",
+    "https://i.imgur.com/HV3cO6b.jpeg",
+    "https://i.imgur.com/ok65VgU.jpeg",
+    "https://i.imgur.com/482sJy8.jpeg",
+    "https://i.imgur.com/uWKmkfK.jpeg",
+    "https://i.imgur.com/rCrGYKo.jpeg",
+    "https://i.imgur.com/GMHfJeL.jpeg",
+    "https://i.imgur.com/hVxoy1I.jpeg",
+    "https://i.imgur.com/QiowRa3.jpeg",
+  ];
 
   let current = -1;
   let rank = 0;
@@ -93,20 +92,20 @@
     }
     loading = false;
   });
-  function fqr(){
-    let link = fqrmemes[Math.floor(Math.random()*fqrmemes.length)];
+  function fqr() {
+    let link = fqrmemes[Math.floor(Math.random() * fqrmemes.length)];
     swal({
       content: {
         element: "img",
         attributes: {
-          src : link
-        }
-      }
-    })
+          src: link,
+        },
+      },
+    });
   }
   $: {
     console.log("scanned: ", currScannedQR);
-    if(currScannedQR && currScannedQR.split("-")[0] === "fake"){
+    if (currScannedQR && currScannedQR.split("-")[0] === "fake") {
       currScannedQR = "";
       fqr();
     }
@@ -155,7 +154,7 @@
         current = res.data.current;
         currlocationQuestion = res.data.nextQuestion;
         currCaptchaQuestion = res.data.nextCaptchaQuestion;
-        currCaptcha = false;
+        currCaptcha = res.data.captcha;
         return;
       }
       return wa();
@@ -167,7 +166,7 @@
       import.meta.env.VITE_BASEURL + "/game/checkAnswer",
       {
         captchaAnswer: currCaptchaAnswer ? currCaptchaAnswer : "",
-        qrCodeSolution: currScannedQR ? currScannedQR : "s1",
+        qrCodeSolution: currScannedQR ? currScannedQR : "qr-M7Ubc",
         current,
       },
       {
@@ -284,12 +283,18 @@
         />
       </svg>
     </div>
-    <div class="text-2xl mt-5 font-bold">Captcha Question</div>
-    <div class="my-4 max-h-[70%] overflow-auto">
-      {currCaptchaQuestion
-        ? currCaptchaQuestion
-        : "No Captcha Question on this round, submit 🤙 ngl"}
-    </div>
+    {#if current === -1}
+      <div class="text-2xl mt-5 font-bold">
+        Submit your answer below to continue
+      </div>
+    {:else}
+      <div class="text-2xl mt-5 font-bold">Captcha Question</div>
+      <div class="my-4 max-h-[70%] overflow-auto">
+        {currCaptchaQuestion
+          ? currCaptchaQuestion
+          : "You got lucky this round. There is no Captcha Question for you to answer. Submit your answer to continue."}
+      </div>
+    {/if}
     <form
       class="mt-auto"
       on:submit|preventDefault={() => {
@@ -305,7 +310,7 @@
           class="w-full p-2 border-2 border-black focus:outline-none bg-transparent text-black placeholder-slate-900"
           type="text"
           bind:value={currCaptchaAnswer}
-          placeholder="Answer"
+          placeholder="type here..."
         />
         {#if loadingSubmit}
           <div class="text-center animate-pulse">Loading...</div>
@@ -380,20 +385,37 @@
       </div>
     </div>
 
-    <div class="flex  mt-auto border-t-2 ">
-      <div
-        on:click={() => (drawerOpen = !drawerOpen)}
-        class="flex justify-center p-5  flex-1"
-      >
-        Answer
+    {#if current === -1}
+      <div class="flex border-t-2  mt-auto">
+        <div
+          on:click={() => (drawerOpen = !drawerOpen)}
+          class="flex justify-center p-5  flex-1"
+        >
+          Continue
+        </div>
       </div>
-      <label
-        for="my-modal"
-        class="flex justify-center p-5 text-black  bg-red-400 flex-1"
-      >
-        Scan
-      </label>
-    </div>
+    {:else}
+      <div class="flex border-t-2  mt-auto">
+        {#if currScannedQR}
+          <div class="flex justify-center p-5 text-black  bg-red-400 flex-1">
+            Scanned
+          </div>
+        {:else}
+          <label
+            for="my-modal"
+            class="flex justify-center p-5 text-black  bg-red-400 flex-1"
+          >
+            Scan
+          </label>
+        {/if}
+        <div
+          on:click={() => (drawerOpen = !drawerOpen)}
+          class="flex justify-center p-5  flex-1"
+        >
+          Continue
+        </div>
+      </div>
+    {/if}
   </section>
 {/if}
 
