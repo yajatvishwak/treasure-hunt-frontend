@@ -12,6 +12,24 @@
   let qrScanner;
   let loading = true;
   let loadingSubmit = false;
+  let fqrmemes = ["https://imgur.com/qz63qv1",
+"https://imgur.com/HMibelo",
+"https://imgur.com/itOjQqF",
+"https://imgur.com/8LHRWDd",
+"https://imgur.com/OxJxqiL",
+"https://imgur.com/OQItmkw",
+"https://imgur.com/oDDBsKq",
+"https://imgur.com/qXjVXFe",
+"https://imgur.com/HV3cO6b",
+"https://imgur.com/ok65VgU",
+"https://imgur.com/482sJy8",
+"https://imgur.com/uWKmkfK",
+"https://imgur.com/rCrGYKo",
+"https://imgur.com/GMHfJeL",
+"https://imgur.com/hVxoy1I",
+"https://imgur.com/QiowRa3"]
+
+
 
   let current = -1;
   let rank = 0;
@@ -75,7 +93,10 @@
     loading = false;
   });
   function fqr(){
-    swal("Fake QR", "are you stupid or were you born like this ?", "success");
+    let link = fqrmemes[Math.floor(Math.random()*fqrmemes.length)];
+    swal({content: "img", attributes : {
+      src: link
+    }});
   }
   $: {
     console.log("scanned: ", currScannedQR);
