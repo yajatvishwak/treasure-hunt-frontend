@@ -166,7 +166,7 @@
       import.meta.env.VITE_BASEURL + "/game/checkAnswer",
       {
         captchaAnswer: currCaptchaAnswer ? currCaptchaAnswer : "",
-        qrCodeSolution: currScannedQR ? currScannedQR : "qr-M7Ubc",
+        qrCodeSolution: currScannedQR ? currScannedQR : "",
         current,
       },
       {
