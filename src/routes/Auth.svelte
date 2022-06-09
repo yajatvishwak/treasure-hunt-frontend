@@ -7,11 +7,13 @@
   let p2 = "";
   let p3 = "";
   let p4 = "";
+  let loading = false;
   onMount(() => {
     if (localStorage.getItem("token") && localStorage.getItem("teamID"))
       return push("/game");
   });
   async function submit() {
+    loading = true;
     if (localStorage.getItem("token") && localStorage.getItem("teamID"))
       return push("/game");
 
@@ -23,6 +25,7 @@
       import.meta.env.VITE_BASEURL + "/game/registerTeam",
       { teamMembers }
     );
+    loading=false;
     if (res.data) {
       localStorage.setItem("teamID", res.data.teamID);
       localStorage.setItem("token", res.data.accessToken);
@@ -73,12 +76,18 @@
         class="p-3 bg-transparent border outline-red-400"
         placeholder="player 4 name"
       />
+      {#if loading}
+      <div class="p-5 animate-pulse bg-red-400 text-black font-bold hover:bg-black hover:border text-center text-3xl  hover:border-red-400 transition-all hover:text-white">
+          Loading...
+      </div>
+      {:else}
       <button
         type="submit"
         class="p-5 bg-red-400 text-black font-bold hover:bg-black hover:border text-center text-3xl  hover:border-red-400 transition-all hover:text-white"
       >
         Log on
       </button>
+      {/if}
     </form>
   </div>
   <hr />
