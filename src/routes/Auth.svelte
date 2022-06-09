@@ -77,7 +77,7 @@
         type="submit"
         class="p-5 bg-red-400 text-black font-bold hover:bg-black hover:border text-center text-3xl  hover:border-red-400 transition-all hover:text-white"
       >
-        Logon
+        Log on
       </button>
     </form>
   </div>
