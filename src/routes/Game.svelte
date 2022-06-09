@@ -349,7 +349,7 @@
       <div
         class=" flex flex-col gap-2 justify-center items-center border-r-2 flex-1 py-4 font-black"
       >
-        <div class="text-5xl font-thin">{current + 1}/10</div>
+        <div class="text-5xl font-thin">{current + 1}/8</div>
         <div class="text-red-400">level</div>
       </div>
 
