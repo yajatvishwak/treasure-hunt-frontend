@@ -12,22 +12,23 @@
   let qrScanner;
   let loading = true;
   let loadingSubmit = false;
-  let fqrmemes = ["https://imgur.com/qz63qv1",
-"https://imgur.com/HMibelo",
-"https://imgur.com/itOjQqF",
-"https://imgur.com/8LHRWDd",
-"https://imgur.com/OxJxqiL",
-"https://imgur.com/OQItmkw",
-"https://imgur.com/oDDBsKq",
-"https://imgur.com/qXjVXFe",
-"https://imgur.com/HV3cO6b",
-"https://imgur.com/ok65VgU",
-"https://imgur.com/482sJy8",
-"https://imgur.com/uWKmkfK",
-"https://imgur.com/rCrGYKo",
-"https://imgur.com/GMHfJeL",
-"https://imgur.com/hVxoy1I",
-"https://imgur.com/QiowRa3"]
+  let fqrmemes = [
+"https://i.imgur.com/qz63qv1.jpeg",
+"https://i.imgur.com/HMibelo.jpeg",
+"https://i.imgur.com/itOjQqF.jpeg",
+"https://i.imgur.com/8LHRWDd.jpeg",
+"https://i.imgur.com/OxJxqiL.gif",
+"https://i.imgur.com/OQItmkw.jpeg",
+"https://i.imgur.com/oDDBsKq.jpeg",
+"https://i.imgur.com/qXjVXFe.jpeg",
+"https://i.imgur.com/HV3cO6b.jpeg",
+"https://i.imgur.com/ok65VgU.jpeg",
+"https://i.imgur.com/482sJy8.jpeg",
+"https://i.imgur.com/uWKmkfK.jpeg",
+"https://i.imgur.com/rCrGYKo.jpeg",
+"https://i.imgur.com/GMHfJeL.jpeg",
+"https://i.imgur.com/hVxoy1I.jpeg",
+"https://i.imgur.com/QiowRa3.jpeg"]
 
 
 
