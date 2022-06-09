@@ -74,8 +74,15 @@
     }
     loading = false;
   });
+  function fqr(){
+    swal("Fake QR", "are you stupid or were you born like this?", "success");
+  }
   $: {
     console.log("scanned: ", currScannedQR);
+    if(currScannedQR && currScanned.split("-")[0] === "fake"){
+      currScannedQR = "";
+      fqr();
+    }
   }
 
   function processScannedCode(res) {
