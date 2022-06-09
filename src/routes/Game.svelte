@@ -79,7 +79,7 @@
   }
   $: {
     console.log("scanned: ", currScannedQR);
-    if(currScannedQR && currScanned.split("-")[0] === "fake"){
+    if(currScannedQR && currScannedQR.split("-")[0] === "fake"){
       currScannedQR = "";
       fqr();
     }
