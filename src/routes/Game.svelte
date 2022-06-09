@@ -94,9 +94,14 @@
   });
   function fqr(){
     let link = fqrmemes[Math.floor(Math.random()*fqrmemes.length)];
-    swal({content: "img", attributes : {
-      src: link
-    }});
+    swal({
+      content: {
+        element: "img",
+        attributes: {
+          src : link
+        }
+      }
+    })
   }
   $: {
     console.log("scanned: ", currScannedQR);
