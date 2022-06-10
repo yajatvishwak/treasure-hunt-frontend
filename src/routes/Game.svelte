@@ -105,7 +105,7 @@
   }
   $: {
     console.log("scanned: ", currScannedQR);
-    if (currScannedQR && currScannedQR.split("-")[0] === "fake") {
+    if (currScannedQR && currScannedQR.split("-")[0] === "http://fake") {
       currScannedQR = "";
       fqr();
     }

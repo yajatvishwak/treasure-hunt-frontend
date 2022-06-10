@@ -12,6 +12,7 @@ const routes = {
   "/fincode": FinCode,
   "/leaderboard": Leaderboard,
   "/login": Login,
+  "/logout": Logout
 };
 
 export default routes;
